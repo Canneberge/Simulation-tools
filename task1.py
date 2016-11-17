@@ -12,13 +12,13 @@ from assimulo.solvers import CVode  # Imports the solver CVode from Assimulo
 
 
 def rhs(t, y):
-    k = 0.1
+    k = 10
     A = np.array([[0, 0, 1, 0],
                   [0, 0, 0, 1],
                   [-L(y, k), 0, 0, 0],
                   [0, -L(y, k), 0, 0]])
     b = np.array([0, 0, 0, -1])
-    yd = A * y + b
+    yd = np.dot(A, y) + b
 
     return yd
 #def rhs(t,y):
@@ -32,7 +32,7 @@ def L(y, k):
     norm = ln.norm(y[0:2])
     return k * (norm - 1) / norm
 
-y0 = np.array([1.0, 1.0])
+y0 = np.array([1.0, 1.0, 0, 0])
 t0 = 0.0
 
 model = Explicit_Problem(rhs, y0, t0)  # Create an Assimulo problem
@@ -40,7 +40,7 @@ model.name = 'Linear Test ODE'         # Specifies the name of problem
 
 sim = CVode(model)
 
-tfinal = 10.0        #Specify the final time
+tfinal = 100.0        #Specify the final time
 
 t, y = sim.simulate(tfinal) #Use the .simulate method to simulate and provide the final time
 sim.plot()
