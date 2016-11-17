@@ -12,13 +12,13 @@ from assimulo.solvers import CVode  # Imports the solver CVode from Assimulo
 
 
 def rhs(t, y):
-    k = 0.1
+    k = 10
     A = np.array([[0, 0, 1, 0],
                   [0, 0, 0, 1],
                   [-L(y, k), 0, 0, 0],
                   [0, -L(y, k), 0, 0]])
     b = np.array([0, 0, 0, -1])
-    yd = A * y + b
+    yd = np.dot(A,y) + b
 
     return yd
 #def rhs(t,y):
