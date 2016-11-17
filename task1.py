@@ -32,7 +32,7 @@ def L(y, k):
     norm = ln.norm(y[0:2])
     return k * (norm - 1) / norm
 
-y0 = np.array([1.0, 1.0, 0, 0])
+y0 = np.array([1.0, 1.0, 1.0, 1.0])
 t0 = 0.0
 
 model = Explicit_Problem(rhs, y0, t0)  # Create an Assimulo problem
