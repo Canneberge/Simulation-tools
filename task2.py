@@ -7,7 +7,7 @@ import scipy.linalg as SL
 
 class BDF_3(Explicit_ODE):
     """
-    BDF-2   (Example of how to set-up own integrators for Assimulo)
+    BDF-3
     """
     tol=1.e-8     
     maxit=100     
