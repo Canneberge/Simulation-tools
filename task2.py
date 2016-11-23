@@ -1,10 +1,10 @@
-from assimulo.explicit_ode import Explicit_ODE
+from assimulo.explicit_ode import *
 from assimulo.ode import *
 import numpy as np
 import matplotlib.pyplot as mpl
 import scipy.linalg as SL
 from numpy import linalg as ln
-# from assimulo.solvers import CVode
+from assimulo.solvers import CVode
 
 
 class BDF_3(Explicit_ODE):
@@ -171,3 +171,11 @@ exp_sim = BDF_3(pend_mod)  # Create a BDF solver
 t, y = exp_sim.simulate(4)
 exp_sim.plot()
 mpl.show()
+
+toltmp=0.1
+cvod= CVode(pend_mod)
+cvod.atol=toltmp
+cvod.rtol=toltmp
+cvod.maxord=19
+cvod.simulate(5) 
+cvod.plot()
