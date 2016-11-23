@@ -3,6 +3,7 @@ from assimulo.ode import *
 import numpy as np
 import matplotlib.pyplot as mpl
 import scipy.linalg as SL
+from numpy import linalg as ln
 # from assimulo.solvers import CVode
 
 
@@ -148,26 +149,25 @@ class BDF_3(Explicit_ODE):
 
 
 # Define the rhs
-def f(t, y):
-    ydot = -y[0]
-    return np.array([ydot])
+def rhs(t, y):
+    k = 10
+    A = np.array([[0, 0, 1, 0],
+                  [0, 0, 0, 1],
+                  [-L(y, k), 0, 0, 0],
+                  [0, -L(y, k), 0, 0]])
+    b = np.array([0, 0, 0, -1])
+    yd = np.dot(A, y) + b
+    return yd
 
-# Define an Assimulo problem
-exp_mod = Explicit_Problem(f, 4)
-exp_mod.name = 'Simple BDF-3 Example'
+def L(y, k):
+    norm = ln.norm(y[0:2])
+    return k * (norm - 1) / norm
 
-
-# Define another Assimulo problem
-def pend(t, y):
-    # g=9.81    l=0.7134354980239037
-    gl = 13.7503671
-    return np.array([y[1], -gl*np.sin(y[0])])
-
-pend_mod = Explicit_Problem(pend, y0=np.array([2. * np.pi, 1.]))
+pend_mod = Explicit_Problem(rhs, y0 = np.array([1.0, 1.0, 1.0, 1.0]))
 pend_mod.name = 'Nonlinear Pendulum'
 
 # Define an explicit solver
 exp_sim = BDF_3(pend_mod)  # Create a BDF solver
-t, y = exp_sim.simulate(1)
+t, y = exp_sim.simulate(4)
 exp_sim.plot()
 mpl.show()
