@@ -23,7 +23,7 @@ class squeezer(Implicit_ODE):
                 0.,0.,0.,0.,0.]),zeros((6,))))
         self.yp=yp
         self.y=y
-    def squeezer_func (self, y, yp,t):
+    def squeezer_func (self, t, y, yp):
         """
         Residual function of the 7-bar mechanism in
         Hairer, Vol. II, p. 533 ff, see also formula (7.11)
@@ -140,12 +140,12 @@ class squeezer(Implicit_ODE):
     def solve_squeezer(self):
         model = Implicit_Problem(self.squeezer_func, self.y, self.yp, 0)
         sim=IDA(model)
-        tfinal=10
+        tfinal=10.0
         ncp=1000
         t, y, yd = sim.simulate(tfinal, ncp)
         sim.plot()
         return model
 
 a=squeezer()
-print(a.squeezer_func(a.y,a.yp,0))
+"print(a.squeezer_func(a.y,a.yp,0))"
 a.solve_squeezer()
