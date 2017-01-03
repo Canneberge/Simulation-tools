@@ -2,6 +2,7 @@ from scipy import *
 from assimulo.implicit_ode import Implicit_ODE
 from assimulo.problem import Implicit_Problem
 from assimulo.solvers import IDA
+import numpy as np
 
 class squeezer(Implicit_ODE):
     def __init__(self):
@@ -23,6 +24,7 @@ class squeezer(Implicit_ODE):
                 0.,0.,0.,0.,0.]),zeros((6,))))
         self.yp=yp
         self.y=y
+        self.t=0.0
     def squeezer_func (self, t, y, yp):
         """
         Residual function of the 7-bar mechanism in
@@ -138,7 +140,7 @@ class squeezer(Implicit_ODE):
         return hstack((res_1,res_2,res_3))
         
     def solve_squeezer(self):
-        model = Implicit_Problem(self.squeezer_func, self.y, self.yp, 0)
+        model = Implicit_Problem(self.squeezer_func, self.y, self.yp, self.t)
         sim=IDA(model)
         tfinal=10.0
         ncp=1000
@@ -147,5 +149,5 @@ class squeezer(Implicit_ODE):
         return model
 
 a=squeezer()
-"print(a.squeezer_func(a.y,a.yp,0))"
+print(a.squeezer_func(0,a.y,a.yp))
 a.solve_squeezer()
