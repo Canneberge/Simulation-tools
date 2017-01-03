@@ -6,7 +6,6 @@ import numpy as np
 
 class squeezer(Implicit_ODE):
     def __init__(self):
-        #Implicit_ODE.__init__(self,problem)
         y_1 = array([-0.0617138900142764496358948458001,  #  beta
                     0.,                                 #  theta
                     0.455279819163070380255912382449,   # gamma
@@ -137,7 +136,8 @@ class squeezer(Implicit_ODE):
         res_2 = dot(m,yp[7:14])- ff[0:7]+dot(gp.T,lamb)
         res_3 = g
     
-        return hstack((res_1,res_2,res_3))
+        #return hstack((res_1,res_2,res_3))
+        return np.array([res_1,res_2,res_3])
         
     def solve_squeezer(self):
         model = Implicit_Problem(self.squeezer_func, self.y, self.yp, self.t)
@@ -146,8 +146,10 @@ class squeezer(Implicit_ODE):
         ncp=1000
         t, y, yd = sim.simulate(tfinal, ncp)
         sim.plot()
-        return model
-
+        
 a=squeezer()
+print(a.y)
+print(a.yp)
+print(a.t)
 print(a.squeezer_func(0,a.y,a.yp))
 a.solve_squeezer()

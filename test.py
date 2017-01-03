@@ -33,6 +33,7 @@ def run_example():
     t0  = 0.0 #Initial time
     y0  = [1.0, 0.0, 0.0, 0.0, 0.0] #Initial conditions
     yd0 = [0.0, 0.0, 0.0, -9.82, 0.0] #Initial conditions
+    print (residual(t0,y0,yd0))
 
     model = Implicit_Problem(residual, y0, yd0, t0)             #Create an Assimulo problem
     model.name = 'Pendulum'        #Specifies the name of problem (optional)
