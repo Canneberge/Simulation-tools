@@ -135,10 +135,12 @@ class squeezer(Implicit_ODE):
         res_1 = yp[0:7] - y[7:14]
         res_2 = dot(m,yp[7:14])- ff[0:7]+dot(gp.T,lamb)
         res_3 = g
-    
-        #return hstack((res_1,res_2,res_3))
-        return np.array([res_1,res_2,res_3])
         
+        return hstack((res_1,res_2,res_3))
+        #return np.array([res_1,res_2,res_3])
+        #return np.append(res_1,[res_2,res_3])
+    
+
     def solve_squeezer(self):
         model = Implicit_Problem(self.squeezer_func, self.y, self.yp, self.t)
         sim=IDA(model)
@@ -148,8 +150,10 @@ class squeezer(Implicit_ODE):
         sim.plot()
         
 a=squeezer()
+"""
 print(a.y)
 print(a.yp)
 print(a.t)
+"""
 print(a.squeezer_func(0,a.y,a.yp))
 a.solve_squeezer()
