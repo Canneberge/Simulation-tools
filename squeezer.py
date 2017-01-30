@@ -146,6 +146,12 @@ class squeezer(Implicit_ODE):
         sim=IDA(model)
         tfinal=10.0
         ncp=1000
+        sim.atol=1.0e-6
+        sim.suppress_alg=True
+        for i in range (sim.algvar.size):
+            if i>14:
+                sim.algvar[i]=0
+        print(sim.algvar)
         t, y, yd = sim.simulate(tfinal, ncp)
         sim.plot()
         
@@ -155,5 +161,5 @@ print(a.y)
 print(a.yp)
 print(a.t)
 """
-print(a.squeezer_func(0,a.y,a.yp))
+"print(a.squeezer_func(0,a.y,a.yp))"
 a.solve_squeezer()
