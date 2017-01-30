@@ -18,11 +18,13 @@ lB = 2.01e-2 # -x coordinate beak (in bird coordinate system) [m]
 cp = 5.6e-3 # rotational spring constant [N/rad]
 g  = 9.81 #  [m/s^2]
 
-def state1(t,x,y,z):
-    # x: phib
-    # y: phis
+def state1(t,y,yd):
+    # x: phib : y0
+    # y: phis : y1
     lambda1=0
     lambda2=0
     (mS+mB)z+mB*lS*y+mB*lG*x=-(mS+mB)g
-    (mB+lS)z+(JS+mB*lS²)y+(mB*lS*lG)x=cp(x-y)-mB*lS*g-lambda1
-    mB*lG*z+(mB*lS*lG)*y+(JB+mB*lG²)x=cp(y-z)-mB*lG*g-lambda2
+    (mB+lS)yd[2]+(JS+mB*lS²)yd[1]+(mB*lS*lG)yd[0]=cp(y[0]-y[1])-mB*lS*g-lambda1
+    mB*lG*yd[2]+(mB*lS*lG)*yd[1]+(JB+mB*lG²)yd[0]=cp(y[1]-y[0])-mB*lG*g-lambda2
+    
+def state2(t,y,yd:)
